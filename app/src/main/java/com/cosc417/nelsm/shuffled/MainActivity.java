@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         int id = i.getIntExtra("SESSION_ID", 0);
         String user = i.getStringExtra("SESSION_USER");
 
+        // this comment is to test commit
 
     }
 }
