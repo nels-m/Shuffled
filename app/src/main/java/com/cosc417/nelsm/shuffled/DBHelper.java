@@ -111,4 +111,95 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    public String getCurrentWord(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String SQL = "SELECT current_word FROM " + DATA_TABLE + " WHERE " + COL_5 + " =? ";
+        String[] arguments = {Integer.toString(id)};
+        String current_word = "";
+
+        Cursor cursor = db.rawQuery(SQL, arguments);
+
+        if(cursor.moveToFirst()) {
+            current_word = cursor.getString(0);
+        }
+
+        return current_word;
+    }
+
+    public Boolean isNewUser(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String SQL = "SELECT * FROM " + DATA_TABLE + " WHERE " + COL_5 + " =? ";
+        String[] arguments = {Integer.toString(id)};
+
+        Cursor cursor = db.rawQuery(SQL, arguments);
+
+        if(cursor.moveToFirst()) {
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    public long insertUserData(int id, String current_word) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues row = new ContentValues();
+        row.put("user_data_id", id);
+        row.put("current_word", current_word);
+        row.put("score", 0);
+
+        long res = db.insert("data", null, row);
+        db.close();
+        return res;
+    }
+
+    public long updateUserData(int id, String current_word, int score) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues row = new ContentValues();
+        row.put("current_word", current_word);
+        row.put("score", score);
+
+        long res = db.update("data", row,"user_data_id=" + id, null);
+        db.close();
+        return res;
+    }
+
+    public long insertGuessedWord(int id, String guessed_word) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues row = new ContentValues();
+        row.put("user_word_id", id);
+        row.put("word", guessed_word);
+
+        long res = db.insert("words", null, row);
+        db.close();
+        return res;
+    }
+
+    public Boolean isGuessedWord(int id, String word) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String SQL = "SELECT * FROM " + WORDS_TABLE + " WHERE " + COL_9 + " =? " + " AND " + COL_10 + " =? ";;
+        String[] arguments = {Integer.toString(id), word};
+
+        Cursor cursor = db.rawQuery(SQL, arguments);
+
+        if(cursor.moveToFirst()) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public int getScore(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String SQL = "SELECT score FROM " + DATA_TABLE + " WHERE " + COL_5 + " =? ";
+        String[] arguments = {Integer.toString(id)};
+        int score = 0;
+
+        Cursor cursor = db.rawQuery(SQL, arguments);
+
+        if(cursor.moveToFirst()) {
+            score = cursor.getInt(0);
+        }
+
+        return score;
+    }
 }

@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
                 String pass = tPassword.getText().toString();
                 Boolean result = db.verifyUser(user, pass);
                 int id = db.getUserID(user);
+                Boolean isNew = db.isNewUser(id);
 
                 if(result) {
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
@@ -42,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     iMainActivity.putExtra("SESSION_ID", id);
                     iMainActivity.putExtra("SESSION_USER", user);
+                    iMainActivity.putExtra("SESSION_NEW", isNew);
 
                     startActivity(iMainActivity);
                 }else{
