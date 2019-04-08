@@ -18,12 +18,12 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ArrayList<String> dictionary;
-    private final int min = 5;
-    private final int max = 8;
-    private TextView word;
+    private final int min = 4;
+    private final int max = 7;
+    //private TextView testing;
     private TextView shWord;
-    private TextView testNew;
     private TextView showScore;
+    private TextView showGuesses;
     private EditText guessIn;
     private Button guessBtn;
     private Button shuffleBtn;
@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String username;
     private Boolean isNew;
     private int guessCount;
-    private int shuffleCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +54,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         currentWord = "";
 
-        word = (TextView)findViewById(R.id.testWord);
-        shWord = (TextView)findViewById(R.id.testShWord);
+        shWord = (TextView)findViewById(R.id.shufWord);
         showScore = (TextView)findViewById(R.id.scoreDisplay);
+        showGuesses = (TextView)findViewById(R.id.guessDisplay);
+        //testing = (TextView)findViewById(R.id.testing);
 
         guessIn = (EditText)findViewById(R.id.guess_in);
         guessBtn = (Button)findViewById(R.id.guess_button);
@@ -73,16 +73,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if(view == guessBtn) {
-            checkWord();
             guessCount++;
+            checkWord();
         }else if(view == shuffleBtn) {
             shuffledWord = shuffleWord(currentWord);
             shWord.setText(shuffledWord);
-            //score--;
-            //showScore.setText(Integer.toString(score));
         }else if(view == newWordBtn) {
             currentWord = randomWord(id, dictionary);
             score -= 2;
+            if(score < 0) {
+                score = 0;
+            }
             db.updateUserData(id, currentWord, score);
             game(id);
         }
@@ -96,25 +97,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             db.insertUserData(id, currentWord);
             shuffledWord = shuffleWord(currentWord);
             score = 0;
-            word.setText(currentWord);
             shWord.setText(shuffledWord);
             guessIn.setText("");
             showScore.setText(Integer.toString(score));
+            showGuesses.setText(Integer.toString(guessCount));
+            //testing.setText(currentWord);
+            isNew = false;
         }else{
             currentWord = db.getCurrentWord(id);
             shuffledWord = shuffleWord(currentWord);
             score = db.getScore(id);
-            word.setText(currentWord);
             shWord.setText(shuffledWord);
             guessIn.setText("");
             showScore.setText(Integer.toString(score));
+            showGuesses.setText(Integer.toString(guessCount));
+            //testing.setText(currentWord);
         }
     }
 
     private void checkWord() {
-        String w = guessIn.getText().toString();
+        String w = guessIn.getText().toString().toUpperCase();
 
         if (currentWord.equals(w)) {
+            db.insertGuessedWord(id, w);
             Toast.makeText(this, "Correct! The word is: " + currentWord, Toast.LENGTH_SHORT).show();
             currentWord = randomWord(id, dictionary);
 
@@ -126,10 +131,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 score++;
             }
 
+            if(score < 0) {
+                score = 0;
+            }
+
             db.updateUserData(id, currentWord, score);
             game(id);
         } else {
             Toast.makeText(this, "Try Again", Toast.LENGTH_SHORT).show();
+            showGuesses.setText(Integer.toString(guessCount));
             guessIn.setText("");
         }
     }
@@ -186,12 +196,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 c[i] = c[r];
                 c[r] = temp;
             }
-
             return new String(c);
         }
-
         return word;
     }
-
-
 }

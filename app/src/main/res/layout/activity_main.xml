@@ -1,136 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/new_button"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="80dp"
-        android:text="New Word"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
 
-    <Button
-        android:id="@+id/shuffle_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="144dp"
-        android:text="Shuffle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp">
 
-    <TextView
-        android:id="@+id/testWord"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Hello User"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.136" />
+            <ImageButton
+                android:id="@+id/infoBtn"
+                android:scaleType="fitCenter"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@android:color/transparent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                app:srcCompat="@drawable/q_icon"
+                />
 
-    <TextView
-        android:id="@+id/testShWord"
-        android:layout_width="wrap_content"
-        android:layout_height="17dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Hello User"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/testWord"
-        app:layout_constraintVertical_bias="0.0" />
+            <TextView
+                android:id="@+id/scoreLbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="25dp"
+                android:textSize="16dp"
+                android:text="Score:"
+                />
 
-    <EditText
-        android:id="@+id/guess_in"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="244dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/testShWord" />
+            <TextView
+                android:id="@+id/scoreDisplay"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="2dp"
+                android:layout_alignParentRight="true"
+                android:textSize="16dp"
+                android:text=""
+                />
 
-    <Button
-        android:id="@+id/guess_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Guess"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guess_in"
-        app:layout_constraintVertical_bias="0.0" />
+            <TextView
+                android:id="@+id/guessLbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="25dp"
+                android:textSize="16dp"
+                android:text="Guesses:"
+                />
 
-    <TextView
-        android:id="@+id/scoreDisplay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.042" />
+            <TextView
+                android:id="@+id/guessDisplay"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:paddingLeft="2dp"
+                android:layout_alignParentRight="true"
+                android:textSize="16dp"
+                android:text=""
+                />
 
-    <TextView
-        android:id="@+id/scoreLbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Score: "
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/scoreDisplay"
-        app:layout_constraintHorizontal_bias="0.973"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-</android.support.constraint.ConstraintLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/shufWord"
+            android:layout_width="190dp"
+            android:layout_height="40dp"
+            android:textAllCaps="true"
+            android:textSize="24dp"
+            android:textAlignment="center"
+            android:layout_marginTop="80dp"
+            android:text="Shuffled" />
+
+        <EditText
+            android:id="@+id/guess_in"
+            android:layout_width="190dp"
+            android:layout_height="40dp"
+            android:textAllCaps="true"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:layout_marginTop="20dp"
+            android:inputType="textPersonName"
+            />
+
+        <Button
+            android:id="@+id/guess_button"
+            android:layout_width="190dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:text="Guess" />
+        <Button
+            android:id="@+id/shuffle_button"
+            android:layout_width="190dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:text="Shuffle" />
+        <Button
+            android:id="@+id/new_button"
+            android:layout_width="190dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:text="New Word" />
+
+    </LinearLayout>
+</LinearLayout>

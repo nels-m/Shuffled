@@ -10,7 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class DBHelper extends SQLiteOpenHelper {
-    private	static final int DATABASE_VERSION =	8;
+    private	static final int DATABASE_VERSION =	11;
     public static final String DATABASE_NAME = "shuffled.db";
 
     // User Table
@@ -21,7 +21,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // Data Table
     public static final String DATA_TABLE = "data";
-    public static final String COL_4 = "data_id";
     public static final String COL_5 = "user_data_id";
     public static final String COL_6 = "current_word";
     public static final String COL_7 = "score";
@@ -40,7 +39,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT)");
-        db.execSQL("CREATE TABLE " + DATA_TABLE + " (data_id INTEGER PRIMARY KEY AUTOINCREMENT, user_data_id INTEGER, current_word TEXT, score INTEGER, FOREIGN KEY (user_data_id) REFERENCES " + USER_TABLE + " (id))");
+        db.execSQL("CREATE TABLE " + DATA_TABLE + " (user_data_id INTEGER PRIMARY KEY, current_word TEXT, score INTEGER, FOREIGN KEY (user_data_id) REFERENCES " + USER_TABLE + " (id))");
         db.execSQL("CREATE TABLE " + WORDS_TABLE + " (word_id INTEGER PRIMARY KEY AUTOINCREMENT, user_word_id INTEGER, word TEXT, FOREIGN KEY (user_word_id) REFERENCES " + USER_TABLE + " (id))");
     }
 
