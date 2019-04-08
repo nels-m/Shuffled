@@ -10,7 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class DBHelper extends SQLiteOpenHelper {
-    private	static final int DATABASE_VERSION =	11;
+    private	static final int DATABASE_VERSION =	12;
     public static final String DATABASE_NAME = "shuffled.db";
 
     // User Table
@@ -39,7 +39,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT)");
-        db.execSQL("CREATE TABLE " + DATA_TABLE + " (user_data_id INTEGER PRIMARY KEY, current_word TEXT, score INTEGER, FOREIGN KEY (user_data_id) REFERENCES " + USER_TABLE + " (id))");
+        db.execSQL("CREATE TABLE " + DATA_TABLE + " (user_data_id INTEGER PRIMARY KEY, current_word TEXT, score INTEGER, guesses INTEGER, FOREIGN KEY (user_data_id) REFERENCES " + USER_TABLE + " (id))");
         db.execSQL("CREATE TABLE " + WORDS_TABLE + " (word_id INTEGER PRIMARY KEY AUTOINCREMENT, user_word_id INTEGER, word TEXT, FOREIGN KEY (user_word_id) REFERENCES " + USER_TABLE + " (id))");
     }
 
@@ -145,17 +145,19 @@ public class DBHelper extends SQLiteOpenHelper {
         row.put("user_data_id", id);
         row.put("current_word", current_word);
         row.put("score", 0);
+        row.put("guesses", 0);
 
         long res = db.insert("data", null, row);
         db.close();
         return res;
     }
 
-    public long updateUserData(int id, String current_word, int score) {
+    public long updateUserData(int id, String current_word, int score, int guesses) {
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues row = new ContentValues();
         row.put("current_word", current_word);
         row.put("score", score);
+        row.put("guesses", guesses);
 
         long res = db.update("data", row,"user_data_id=" + id, null);
         db.close();
@@ -187,18 +189,19 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public int getScore(int id) {
+    public int[] getScoreAndGuess(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String SQL = "SELECT score FROM " + DATA_TABLE + " WHERE " + COL_5 + " =? ";
+        String SQL = "SELECT score, guesses FROM " + DATA_TABLE + " WHERE " + COL_5 + " =? ";
         String[] arguments = {Integer.toString(id)};
-        int score = 0;
+        int[] data = new int[2];
 
         Cursor cursor = db.rawQuery(SQL, arguments);
 
         if(cursor.moveToFirst()) {
-            score = cursor.getInt(0);
+            data[0] = cursor.getInt(0);
+            data[1] = cursor.getInt(1);
         }
 
-        return score;
+        return data;
     }
 }
