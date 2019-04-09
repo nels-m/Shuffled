@@ -1,3 +1,5 @@
+/* Nelson Murray - 300263834 - 08.04.2019 */
+
 package com.cosc417.nelsm.shuffled;
 
 import android.content.Intent;

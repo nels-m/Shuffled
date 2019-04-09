@@ -1,3 +1,5 @@
+/* Nelson Murray - 300263834 - 08.04.2019 */
+
 package com.cosc417.nelsm.shuffled;
 
 import android.content.ContentValues;
@@ -87,6 +89,9 @@ public class DBHelper extends SQLiteOpenHelper {
             id = cursor.getInt(0);
         }
 
+        cursor.close();
+        db.close();
+
         return id;
     }
 
@@ -118,6 +123,9 @@ public class DBHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()) {
             current_word = cursor.getString(0);
         }
+
+        cursor.close();
+        db.close();
 
         return current_word;
     }
@@ -198,6 +206,9 @@ public class DBHelper extends SQLiteOpenHelper {
             data[0] = cursor.getInt(0);
             data[1] = cursor.getInt(1);
         }
+
+        cursor.close();
+        db.close();
 
         return data;
     }
