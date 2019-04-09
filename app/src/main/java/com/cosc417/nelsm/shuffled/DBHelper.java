@@ -5,12 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.Nullable;
-import android.util.Log;
-import android.widget.Toast;
 
 public class DBHelper extends SQLiteOpenHelper {
-    private	static final int DATABASE_VERSION =	12;
+    private	static final int DATABASE_VERSION =	13;
     public static final String DATABASE_NAME = "shuffled.db";
 
     // User Table
