@@ -32,10 +32,14 @@
             />
 
         <Button
+            style="@style/Widget.AppCompat.Button.Colored"
             android:id="@+id/login"
             android:layout_width="190dp"
-            android:layout_height="45dp"
+            android:layout_height="55dp"
             android:layout_marginTop="5dp"
+            android:backgroundTint="@color/colorAccent"
+            android:textColor="@android:color/white"
+            android:textSize="16dp"
             android:text="@string/login"
             />
 
@@ -58,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:text="@string/register"
-                android:textColor="#008577"
+                android:textColor="@color/colorPrimaryDark"
                 />
         </LinearLayout>
 

@@ -7,4 +7,8 @@
     <string name="are_you_new">Are you new?</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="already_registered">Already registered?</string>
+    <string name="title_activity_pop_up">PopUp</string>
+    <string name="welcome">Welcome to SHUFFLED!</string>
+    <string name="info">Unscramble the letters and make a GUESS. \n\n5 points on the first guess \n3 points until the third guess \n2 points until the fifth guess \n1 point for subsequent guesses \n\nYou can re-SHUFFLE up to 3 times \n\nPicking a NEW WORD costs 1 point!</string>
+    <string name="bye">Have Fun!</string>
 </resources>

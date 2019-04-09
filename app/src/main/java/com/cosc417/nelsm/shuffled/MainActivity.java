@@ -1,11 +1,13 @@
 package com.cosc417.nelsm.shuffled;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,11 +21,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ArrayList<String> dictionary;
     private final int min = 4;
-    private final int max = 7;
+    private final int max = 8;
     private TextView shWord;
     private TextView showScore;
     private TextView showGuesses;
     private EditText guessIn;
+    private ImageButton infoButton;
     private Button guessBtn;
     private Button shuffleBtn;
     private Button newWordBtn;
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String username;
     private Boolean isNew;
     private int guessCount;
+    private int shuffleCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         currentWord = "";
 
+        infoButton = (ImageButton)findViewById(R.id.infoBtn);
+        infoButton.setOnClickListener(this);
         shWord = (TextView)findViewById(R.id.shufWord);
         showScore = (TextView)findViewById(R.id.scoreDisplay);
         showGuesses = (TextView)findViewById(R.id.guessDisplay);
@@ -74,8 +80,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             guessCount++;
             checkWord();
         }else if(view == shuffleBtn) {
+            shuffleCount++;
             shuffledWord = shuffleWord(currentWord);
             shWord.setText(shuffledWord);
+            if(shuffleCount == 3) {
+                shuffleBtn.setEnabled(false);
+                shuffleBtn.setPaintFlags(shuffleBtn.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            }
         }else if(view == newWordBtn) {
             currentWord = randomWord(id, dictionary);
             score--;
@@ -85,27 +96,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             guessCount = 0;
             db.updateUserData(id, currentWord, score, guessCount);
             game(id);
+        }else if(view == infoButton) {
+            Intent infoPop = new Intent(MainActivity.this, Pop.class);
+            startActivity(infoPop);
         }
     }
 
     public void game(int id) {
         guessCount = 0;
+        shuffleCount = 0;
+        shuffleBtn.setEnabled(true);
+        shuffleBtn.setPaintFlags(shuffleBtn.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
         if(isNew) {
             currentWord = randomWord(id, dictionary);
             db.insertUserData(id, currentWord);
             shuffledWord = shuffleWord(currentWord);
+
             score = 0;
+
             shWord.setText(shuffledWord);
             guessIn.setText("");
             showScore.setText(Integer.toString(score));
             showGuesses.setText(Integer.toString(guessCount));
+
             isNew = false;
         }else{
             currentWord = db.getCurrentWord(id);
             shuffledWord = shuffleWord(currentWord);
+
             score = db.getScoreAndGuess(id)[0];
             guessCount = db.getScoreAndGuess(id)[1];
+
             shWord.setText(shuffledWord);
             guessIn.setText("");
             showScore.setText(Integer.toString(score));
@@ -121,7 +143,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "Correct! The word is: " + currentWord, Toast.LENGTH_SHORT).show();
             currentWord = randomWord(id, dictionary);
 
-            if(guessCount < 4) {
+            if(guessCount <= 1){
+                score += 5;
+            }else if(guessCount <= 3) {
                 score += 3;
             }else if(guessCount <= 5) {
                 score += 2;
